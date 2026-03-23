@@ -1,3 +1,5 @@
+import 'lesson.dart';
+
 class Unit {
   final int id;
   final String name;
