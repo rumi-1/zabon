@@ -1,12 +1,12 @@
 import '../models/alphabet_letter.dart';
 
 const List<AlphabetLetter> dariAlphabet = [
-  AlphabetLetter(symbol: 'ا', name: 'Alif', sound: 'a / aa', example: 'آب', audioFile: 'alif.ogg'),
-  AlphabetLetter(symbol: 'ب', name: 'Be', sound: 'b', example: 'برادر', audioFile: 'be.ogg'),
-  AlphabetLetter(symbol: 'پ', name: 'Pe', sound: 'p', example: 'پدر', audioFile: 'pe.ogg'),
-  AlphabetLetter(symbol: 'ت', name: 'Te', sound: 't', example: 'تشکر', audioFile: 'te.ogg'),
-  AlphabetLetter(symbol: 'ث', name: 'Se', sound: 's', example: 'ثمر', audioFile: 'se.ogg'),
-  AlphabetLetter(symbol: 'ج', name: 'Jim', sound: 'j', example: 'جای', audioFile: 'jim.ogg'),
+  AlphabetLetter(symbol: 'ا', name: 'Alif', sound: 'a / aa', example: 'آب', audioFile: 'alif.mp3'),
+  AlphabetLetter(symbol: 'ب', name: 'Be', sound: 'b', example: 'برادر', audioFile: 'be.mp3'),
+  AlphabetLetter(symbol: 'پ', name: 'Pe', sound: 'p', example: 'پدر', audioFile: 'pe.mp3'),
+  AlphabetLetter(symbol: 'ت', name: 'Te', sound: 't', example: 'تشکر', audioFile: 'te.mp3'),
+  AlphabetLetter(symbol: 'ث', name: 'Se', sound: 's', example: 'ثمر', audioFile: 'se.mp3'),
+  AlphabetLetter(symbol: 'ج', name: 'Jim', sound: 'j', example: 'جای', audioFile: 'jim.mp3'),
   AlphabetLetter(symbol: 'چ', name: 'Che', sound: 'ch', example: 'چای', audioFile: 'che.ogg'),
   AlphabetLetter(symbol: 'ح', name: 'He (ḥ)', sound: 'breathy h', example: 'حمام', audioFile: 'he_h.ogg'),
   AlphabetLetter(symbol: 'خ', name: 'Khe', sound: 'kh', example: 'خانه', audioFile: 'khe.ogg'),
