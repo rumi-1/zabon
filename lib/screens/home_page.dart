@@ -91,18 +91,20 @@ class HomePage extends StatelessWidget {
                   (unit) => Padding(
                     padding: const EdgeInsets.only(bottom: 12),
                     child: UnitCard(
-                      unit: unit,
+                      unit: unit.copyWith(
+                        locked: unit.id > 0 && appState.completedCountForUnit(unit.id - 1) < dariUnits[unit.id - 1].lessons.length,
+                      ),
                       completedLessons: appState.completedCountForUnit(unit.id),
-                      onTap: unit.locked
-                          ? null
-                          : () {
+                      onTap: (unit.id == 0 || appState.completedCountForUnit(unit.id - 1) >= dariUnits[unit.id - 1].lessons.length)
+                          ? () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (_) => UnitPage(unit: unit),
                                 ),
                               );
-                            },
+                            }
+                          : null,
                     ),
                   ),
                 ),

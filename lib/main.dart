@@ -6,7 +6,11 @@ import 'state/app_state.dart';
 void main() {
   runApp(
     ChangeNotifierProvider(
-      create: (_) => AppState(),
+      create: (_) {
+        final appState = AppState();
+        appState.initializeDefaults();
+        return appState;
+      },
       child: const RoshanApp(),
     ),
   );

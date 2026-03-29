@@ -5,6 +5,12 @@ class AppState extends ChangeNotifier {
   int streak = 0;
   int wordsLearned = 0;
 
+  // Profile information
+  String profileName = 'Learner';
+  String? profilePicturePath;
+  DateTime? startDate;
+  int currentUnitId = 0;
+
   final Map<int, Set<int>> completedLessons = {};
   final Set<String> masteredLetters = {};
 
@@ -33,5 +39,31 @@ class AppState extends ChangeNotifier {
       xp += 2;
     }
     notifyListeners();
+  }
+
+  // Profile methods
+  void updateProfileName(String name) {
+    profileName = name;
+    notifyListeners();
+  }
+
+  void updateProfilePicture(String? path) {
+    profilePicturePath = path;
+    notifyListeners();
+  }
+
+  void setStartDate(DateTime date) {
+    startDate = date;
+    notifyListeners();
+  }
+
+  void setCurrentUnit(int unitId) {
+    currentUnitId = unitId;
+    notifyListeners();
+  }
+
+  // Initialize default values
+  void initializeDefaults() {
+    startDate ??= DateTime.now();
   }
 }

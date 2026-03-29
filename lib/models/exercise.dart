@@ -5,6 +5,7 @@ enum ExerciseType {
   fillBlank,
   matching,
   trueFalse,
+  wordBank, // New exercise type
 }
 
 class Exercise {
@@ -29,6 +30,10 @@ class Exercise {
   final String? statementEnglish;
   final bool? answer;
 
+  // Word bank exercise fields
+  final List<String>? wordBank;
+  final String? targetSentence;
+
   const Exercise({
     required this.type,
     this.prompt,
@@ -45,6 +50,8 @@ class Exercise {
     this.statementDari,
     this.statementEnglish,
     this.answer,
+    this.wordBank,
+    this.targetSentence,
   });
 }
 
