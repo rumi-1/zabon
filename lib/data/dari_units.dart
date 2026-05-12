@@ -2,7 +2,7 @@ import '../models/unit.dart';
 import '../models/lesson.dart';
 import '../models/exercise.dart';
 
-const List<Unit> dariUnits = [
+final List<Unit> dariUnits = [
   Unit(
     id: 0,
     name: 'Greetings & Introductions',
@@ -85,11 +85,11 @@ const List<Unit> dariUnits = [
             options: ['شما هستید', 'من هستم', 'او است', 'ما هستیم'],
           ),
           Exercise(
-            type: ExerciseType.fillBlank,
-            prompt: 'Fill in the blank: ___ علی هستم',
-            sentenceParts: ['___', ' علی هستم'],
-            blankAnswer: 'من',
-            altAnswers: ['منم'],
+            type: ExerciseType.dragDropSentence,
+            prompt: 'Complete the sentence by dragging the correct word',
+            dragSentenceParts: ['من', '___', 'علی هستم'],
+            dragWords: ['از', 'اسم', 'من'],
+            correctOrder: ['اسم'],
           ),
         ],
       ),
@@ -103,10 +103,10 @@ const List<Unit> dariUnits = [
             type: ExerciseType.vocabIntro,
             words: [
               VocabWord(
-                dari: 'متشکرم',
-                phonetic: 'motashakkeram',
+                dari: 'تشکر',
+                phonetic: 'tashakor',
                 english: 'Thank you',
-                note: 'Express gratitude',
+                note: 'Common Kabul Dari expression of gratitude',
               ),
               VocabWord(
                 dari: 'خواهش می‌کنم',
@@ -130,9 +130,9 @@ const List<Unit> dariUnits = [
           ),
           Exercise(
             type: ExerciseType.mcqDariToEnglish,
-            prompt: 'What does "متشکرم" mean?',
-            dari: 'متشکرم',
-            phonetic: 'motashakkeram',
+            prompt: 'What does "تشکر" mean?',
+            dari: 'تشکر',
+            phonetic: 'tashakor',
             correct: 'Thank you',
             options: ['You\'re welcome', 'Thank you', 'Please', 'Excuse me'],
           ),
@@ -146,7 +146,7 @@ const List<Unit> dariUnits = [
             type: ExerciseType.matching,
             prompt: 'Match the Dari phrases with their English meanings',
             pairs: [
-              MatchingPair(dari: 'متشکرم', english: 'Thank you'),
+              MatchingPair(dari: 'تشکر', english: 'Thank you'),
               MatchingPair(dari: 'خواهش می‌کنم', english: 'You\'re welcome'),
               MatchingPair(dari: 'ببخشید', english: 'Excuse me'),
               MatchingPair(dari: 'لطفاً', english: 'Please'),
@@ -187,11 +187,11 @@ const List<Unit> dariUnits = [
             options: ['father', 'mother', 'brother', 'sister'],
           ),
           Exercise(
-            type: ExerciseType.fillBlank,
-            prompt: 'Fill in the blank: ___ من مادر است',
-            sentenceParts: ['___', ' من مادر است'],
-            blankAnswer: 'او',
-            altAnswers: ['اون'],
+            type: ExerciseType.dragDropSentence,
+            prompt: 'Complete the sentence by dragging the correct word',
+            dragSentenceParts: ['___', 'من مادر است'],
+            dragWords: ['او', 'من', 'شما'],
+            correctOrder: ['او'],
           ),
         ],
       ),
@@ -248,15 +248,15 @@ const List<Unit> dariUnits = [
           Exercise(
             type: ExerciseType.vocabIntro,
             words: [
-              VocabWord(dari: 'یک', phonetic: 'yek', english: 'one'),
+              VocabWord(dari: 'یک', phonetic: 'yak', english: 'one'),
               VocabWord(dari: 'دو', phonetic: 'do', english: 'two'),
               VocabWord(dari: 'سه', phonetic: 'se', english: 'three'),
-              VocabWord(dari: 'چهار', phonetic: 'chahâr', english: 'four'),
+              VocabWord(dari: 'چهار', phonetic: 'châr', english: 'four'),
               VocabWord(dari: 'پنج', phonetic: 'panj', english: 'five'),
-              VocabWord(dari: 'شش', phonetic: 'shesh', english: 'six'),
+              VocabWord(dari: 'شش', phonetic: 'shash', english: 'six'),
               VocabWord(dari: 'هفت', phonetic: 'haft', english: 'seven'),
               VocabWord(dari: 'هشت', phonetic: 'hasht', english: 'eight'),
-              VocabWord(dari: 'نه', phonetic: 'noh', english: 'nine'),
+              VocabWord(dari: 'نه', phonetic: 'no', english: 'nine'),
               VocabWord(dari: 'ده', phonetic: 'dah', english: 'ten'),
             ],
           ),
@@ -336,7 +336,7 @@ const List<Unit> dariUnits = [
               VocabWord(dari: 'برنج', phonetic: 'berenj', english: 'rice', note: 'Common grain'),
               VocabWord(dari: 'گوشت', phonetic: 'gosht', english: 'meat', note: 'Protein source'),
               VocabWord(dari: 'سبزی', phonetic: 'sabzi', english: 'vegetables', note: 'Plant foods'),
-              VocabWord(dari: 'چای', phonetic: 'chây', english: 'tea', note: 'National drink'),
+              VocabWord(dari: 'چای', phonetic: 'châi', english: 'tea', note: 'National drink'),
             ],
           ),
           Exercise(
@@ -366,9 +366,9 @@ const List<Unit> dariUnits = [
             words: [
               VocabWord(dari: 'خوردن', phonetic: 'khordan', english: 'to eat', note: 'Action of eating'),
               VocabWord(dari: 'نوشیدن', phonetic: 'noshidan', english: 'to drink', note: 'Action of drinking'),
-              VocabWord(dari: 'گرسنه', phonetic: 'gersone', english: 'hungry', note: 'Feeling of hunger'),
+              VocabWord(dari: 'گرسنه', phonetic: 'gershna', english: 'hungry', note: 'Feeling of hunger'),
               VocabWord(dari: 'تشنه', phonetic: 'teshne', english: 'thirsty', note: 'Feeling of thirst'),
-              VocabWord(dari: 'خوشمزه', phonetic: 'khoshamze', english: 'delicious', note: 'Tastes good'),
+              VocabWord(dari: 'خوشمزه', phonetic: 'khoshmaza', english: 'delicious', note: 'Tastes good'),
             ],
           ),
           Exercise(
@@ -407,12 +407,12 @@ const List<Unit> dariUnits = [
           Exercise(
             type: ExerciseType.vocabIntro,
             words: [
-              VocabWord(dari: 'قرمز', phonetic: 'ghermez', english: 'red'),
+              VocabWord(dari: 'قرمز', phonetic: 'qermez', english: 'red'),
               VocabWord(dari: 'آبی', phonetic: 'âbi', english: 'blue'),
               VocabWord(dari: 'سبز', phonetic: 'sabz', english: 'green'),
               VocabWord(dari: 'زرد', phonetic: 'zard', english: 'yellow'),
-              VocabWord(dari: 'سیاه', phonetic: 'siyâh', english: 'black'),
-              VocabWord(dari: 'سفید', phonetic: 'sefid', english: 'white'),
+              VocabWord(dari: 'سیاه', phonetic: 'syâh', english: 'black'),
+              VocabWord(dari: 'سفید', phonetic: 'safed', english: 'white'),
             ],
           ),
           Exercise(
@@ -539,6 +539,235 @@ const List<Unit> dariUnits = [
               MatchingPair(dari: 'تماشا کردن', english: 'to watch'),
               MatchingPair(dari: 'خوابیدن', english: 'to sleep'),
               MatchingPair(dari: 'خواندن', english: 'to read'),
+            ],
+          ),
+        ],
+      ),
+    ],
+  ),
+  Unit(
+    id: 6,
+    name: 'Numbers & Counting',
+    dari: 'اعداد و شمارش',
+    iconText: '🔢',
+    description: 'Learn numbers from 1 to 10 and basic counting.',
+    lessons: [
+      Lesson(
+        name: 'Numbers 1-5',
+        subtitle: 'اعداد ۱ تا ۵',
+        type: 'Vocabulary',
+        xp: 12,
+        exercises: [
+          Exercise(
+            type: ExerciseType.vocabIntro,
+            words: [
+              VocabWord(dari: 'یک', phonetic: 'yak', english: 'one'),
+              VocabWord(dari: 'دو', phonetic: 'do', english: 'two'),
+              VocabWord(dari: 'سه', phonetic: 'se', english: 'three'),
+              VocabWord(dari: 'چهار', phonetic: 'châr', english: 'four'),
+              VocabWord(dari: 'پنج', phonetic: 'panj', english: 'five'),
+            ],
+          ),
+          Exercise(
+            type: ExerciseType.mcqDariToEnglish,
+            prompt: 'What does "سه" mean?',
+            dari: 'سه',
+            phonetic: 'se',
+            correct: 'three',
+            options: ['one', 'two', 'three', 'four'],
+          ),
+          Exercise(
+            type: ExerciseType.fillBlank,
+            prompt: 'Fill in the blank: من ___ برادر دارم',
+            sentenceParts: ['من ___', ' برادر دارم'],
+            blankAnswer: 'دو',
+          ),
+        ],
+      ),
+      Lesson(
+        name: 'Numbers 6-10',
+        subtitle: 'اعداد ۶ تا ۱۰',
+        type: 'Vocabulary',
+        xp: 13,
+        exercises: [
+          Exercise(
+            type: ExerciseType.vocabIntro,
+            words: [
+              VocabWord(dari: 'شش', phonetic: 'shash', english: 'six'),
+              VocabWord(dari: 'هفت', phonetic: 'haft', english: 'seven'),
+              VocabWord(dari: 'هشت', phonetic: 'hasht', english: 'eight'),
+              VocabWord(dari: 'نه', phonetic: 'no', english: 'nine'),
+              VocabWord(dari: 'ده', phonetic: 'dah', english: 'ten'),
+            ],
+          ),
+          Exercise(
+            type: ExerciseType.mcqEnglishToDari,
+            prompt: 'What is "eight" in Dari?',
+            english: 'eight',
+            correct: 'هشت',
+            options: ['شش', 'هفت', 'هشت', 'نه'],
+          ),
+          Exercise(
+            type: ExerciseType.matching,
+            prompt: 'Match the numbers',
+            pairs: [
+              MatchingPair(dari: 'شش', english: 'six'),
+              MatchingPair(dari: 'هفت', english: 'seven'),
+              MatchingPair(dari: 'هشت', english: 'eight'),
+              MatchingPair(dari: 'نه', english: 'nine'),
+              MatchingPair(dari: 'ده', english: 'ten'),
+            ],
+          ),
+        ],
+      ),
+    ],
+  ),
+  Unit(
+    id: 7,
+    name: 'Time & Calendar',
+    dari: 'زمان و تقویم',
+    iconText: '🕐',
+    description: 'Learn days of the week and time expressions.',
+    lessons: [
+      Lesson(
+        name: 'Days of the Week',
+        subtitle: 'روزهای هفته',
+        type: 'Vocabulary',
+        xp: 15,
+        exercises: [
+          Exercise(
+            type: ExerciseType.vocabIntro,
+            words: [
+              VocabWord(dari: 'شنبه', phonetic: 'shanbe', english: 'Saturday'),
+              VocabWord(dari: 'یکشنبه', phonetic: 'yekshanbe', english: 'Sunday'),
+              VocabWord(dari: 'دوشنبه', phonetic: 'doshanbe', english: 'Monday'),
+              VocabWord(dari: 'سه‌شنبه', phonetic: 'seshanbe', english: 'Tuesday'),
+              VocabWord(dari: 'چهارشنبه', phonetic: 'chahârshanbe', english: 'Wednesday'),
+              VocabWord(dari: 'پنج‌شنبه', phonetic: 'panjshanbe', english: 'Thursday'),
+              VocabWord(dari: 'جمعه', phonetic: 'jome', english: 'Friday'),
+            ],
+          ),
+          Exercise(
+            type: ExerciseType.mcqDariToEnglish,
+            prompt: 'What day is "جمعه"?',
+            dari: 'جمعه',
+            phonetic: 'jome',
+            correct: 'Friday',
+            options: ['Saturday', 'Sunday', 'Friday', 'Monday'],
+          ),
+          Exercise(
+            type: ExerciseType.fillBlank,
+            prompt: 'Fill in the blank: امروز ___ است',
+            sentenceParts: ['امروز ___', ' است'],
+            blankAnswer: 'جمعه',
+          ),
+        ],
+      ),
+      Lesson(
+        name: 'Time Expressions',
+        subtitle: 'عبارات زمانی',
+        type: 'Vocabulary',
+        xp: 14,
+        exercises: [
+          Exercise(
+            type: ExerciseType.vocabIntro,
+            words: [
+              VocabWord(dari: 'صبح', phonetic: 'sobh', english: 'morning'),
+              VocabWord(dari: 'عصر', phonetic: 'asr', english: 'afternoon'),
+              VocabWord(dari: 'شب', phonetic: 'shab', english: 'night'),
+              VocabWord(dari: 'امروز', phonetic: 'emruz', english: 'today'),
+              VocabWord(dari: 'دیروز', phonetic: 'diruz', english: 'yesterday'),
+              VocabWord(dari: 'فردا', phonetic: 'fardâ', english: 'tomorrow'),
+            ],
+          ),
+          Exercise(
+            type: ExerciseType.trueFalse,
+            statementDari: 'صبح',
+            statementEnglish: 'morning',
+            answer: true,
+          ),
+          Exercise(
+            type: ExerciseType.matching,
+            prompt: 'Match the time expressions',
+            pairs: [
+              MatchingPair(dari: 'صبح', english: 'morning'),
+              MatchingPair(dari: 'عصر', english: 'afternoon'),
+              MatchingPair(dari: 'شب', english: 'night'),
+              MatchingPair(dari: 'امروز', english: 'today'),
+            ],
+          ),
+        ],
+      ),
+    ],
+  ),
+  Unit(
+    id: 8,
+    name: 'Weather & Seasons',
+    dari: 'هوای و فصل‌ها',
+    iconText: '🌤️',
+    description: 'Learn weather vocabulary and seasonal expressions.',
+    lessons: [
+      Lesson(
+        name: 'Weather Conditions',
+        subtitle: 'شرایط هوایی',
+        type: 'Vocabulary',
+        xp: 16,
+        exercises: [
+          Exercise(
+            type: ExerciseType.vocabIntro,
+            words: [
+              VocabWord(dari: 'آفتابی', phonetic: 'âftâbi', english: 'sunny'),
+              VocabWord(dari: 'ابری', phonetic: 'abri', english: 'cloudy'),
+              VocabWord(dari: 'بارانی', phonetic: 'bârâni', english: 'rainy'),
+              VocabWord(dari: 'برفی', phonetic: 'barfi', english: 'snowy'),
+              VocabWord(dari: 'باد', phonetic: 'bâd', english: 'wind'),
+            ],
+          ),
+          Exercise(
+            type: ExerciseType.mcqDariToEnglish,
+            prompt: 'What does "بارانی" mean?',
+            dari: 'بارانی',
+            phonetic: 'bârâni',
+            correct: 'rainy',
+            options: ['sunny', 'cloudy', 'rainy', 'windy'],
+          ),
+          Exercise(
+            type: ExerciseType.fillBlank,
+            prompt: 'Fill in the blank: امروز هوا ___ است',
+            sentenceParts: ['امروز هوا ___', ' است'],
+            blankAnswer: 'آفتابی',
+          ),
+        ],
+      ),
+      Lesson(
+        name: 'Temperature & Feelings',
+        subtitle: 'دما و احساسات',
+        type: 'Vocabulary',
+        xp: 13,
+        exercises: [
+          Exercise(
+            type: ExerciseType.vocabIntro,
+            words: [
+              VocabWord(dari: 'گرم', phonetic: 'garm', english: 'hot'),
+              VocabWord(dari: 'سرد', phonetic: 'sard', english: 'cold'),
+              VocabWord(dari: 'هوای خوب', phonetic: 'havây khub', english: 'good weather'),
+              VocabWord(dari: 'هوای بد', phonetic: 'havây bad', english: 'bad weather'),
+            ],
+          ),
+          Exercise(
+            type: ExerciseType.trueFalse,
+            statementDari: 'گرم',
+            statementEnglish: 'hot',
+            answer: true,
+          ),
+          Exercise(
+            type: ExerciseType.matching,
+            prompt: 'Match the weather descriptions',
+            pairs: [
+              MatchingPair(dari: 'گرم', english: 'hot'),
+              MatchingPair(dari: 'سرد', english: 'cold'),
+              MatchingPair(dari: 'هوای خوب', english: 'good weather'),
+              MatchingPair(dari: 'هوای بد', english: 'bad weather'),
             ],
           ),
         ],

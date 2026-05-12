@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../models/unit.dart';
 import '../models/exercise.dart';
 import '../state/app_state.dart';
+import '../utils/animations.dart';
 
 class LessonPage extends StatefulWidget {
   final Unit unit;
@@ -19,6 +20,29 @@ class _LessonPageState extends State<LessonPage> {
   int currentExerciseIndex = 0;
   Map<int, String?> userAnswers = {};
   Map<int, bool> exerciseCompleted = {};
+  bool _showSuccessAnimation = false;
+  bool _showErrorAnimation = false;
+
+  void _completeExercise(bool isCorrect) {
+    setState(() {
+      exerciseCompleted[currentExerciseIndex] = true;
+      if (isCorrect) {
+        _showSuccessAnimation = true;
+      } else {
+        _showErrorAnimation = true;
+      }
+    });
+
+    // Hide animation after delay
+    Future.delayed(const Duration(milliseconds: 1500), () {
+      if (mounted) {
+        setState(() {
+          _showSuccessAnimation = false;
+          _showErrorAnimation = false;
+        });
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,58 +65,91 @@ class _LessonPageState extends State<LessonPage> {
             ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Progress indicator
-            LinearProgressIndicator(
-              value: (currentExerciseIndex + 1) / lesson.exercises.length,
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Exercise ${currentExerciseIndex + 1} of ${lesson.exercises.length}',
-              style: const TextStyle(fontSize: 14, color: Colors.grey),
-            ),
-            const SizedBox(height: 16),
-
-            // Exercise content
-            Expanded(
-              child: _buildExercise(lesson.exercises[currentExerciseIndex]),
-            ),
-
-            // Navigation buttons
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (currentExerciseIndex > 0)
-                  ElevatedButton(
-                    onPressed: () => setState(() => currentExerciseIndex--),
-                    child: const Text('Previous'),
-                  )
-                else
-                  const SizedBox.shrink(),
-                if (currentExerciseIndex < lesson.exercises.length - 1)
-                  ElevatedButton(
-                    onPressed: () => setState(() => currentExerciseIndex++),
-                    child: const Text('Next'),
-                  )
-                else
-                  ElevatedButton(
-                    onPressed: () {
-                      appState.completeLesson(widget.unit.id, widget.lessonIndex, lesson.xp);
-                      Navigator.pop(context);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
-                    ),
-                    child: const Text('Complete Lesson'),
-                  ),
+                // Progress indicator
+                LinearProgressIndicator(
+                  value: (currentExerciseIndex + 1) / lesson.exercises.length,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Exercise ${currentExerciseIndex + 1} of ${lesson.exercises.length}',
+                  style: const TextStyle(fontSize: 14, color: Colors.grey),
+                ),
+                const SizedBox(height: 16),
+
+                // Exercise content
+                Expanded(
+                  child: AppAnimations.fadeIn(_buildExercise(lesson.exercises[currentExerciseIndex])),
+                ),
+
+                // Navigation buttons
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    if (currentExerciseIndex > 0)
+                      ElevatedButton(
+                        onPressed: () => setState(() => currentExerciseIndex--),
+                        child: const Text('Previous'),
+                      )
+                    else
+                      const SizedBox.shrink(),
+                    if (currentExerciseIndex < lesson.exercises.length - 1)
+                      ElevatedButton(
+                        onPressed: () => setState(() => currentExerciseIndex++),
+                        child: const Text('Next'),
+                      )
+                    else
+                      ElevatedButton(
+                        onPressed: () {
+                          appState.completeLesson(widget.unit.id, widget.lessonIndex, lesson.xp);
+                          Navigator.pop(context);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green,
+                        ),
+                        child: const Text('Complete Lesson'),
+                      ),
+                  ],
+                ),
               ],
             ),
-          ],
-        ),
+          ),
+
+          // Animation overlays
+          if (_showSuccessAnimation)
+            Positioned.fill(
+              child: Container(
+                color: Colors.black26,
+                child: Center(
+                  child: AppAnimations.successAnimation(
+                    onComplete: () {
+                      setState(() => _showSuccessAnimation = false);
+                    },
+                  ),
+                ),
+              ),
+            ),
+
+          if (_showErrorAnimation)
+            Positioned.fill(
+              child: Container(
+                color: Colors.black26,
+                child: Center(
+                  child: AppAnimations.errorAnimation(
+                    onComplete: () {
+                      setState(() => _showErrorAnimation = false);
+                    },
+                  ),
+                ),
+              ),
+            ),
+        ],
       ),
     );
   }
@@ -113,6 +170,8 @@ class _LessonPageState extends State<LessonPage> {
         return _buildTrueFalse(exercise);
       case ExerciseType.wordBank:
         return _buildWordBank(exercise);
+      case ExerciseType.dragDropSentence:
+        return _buildDragDropSentence(exercise);
     }
   }
 
@@ -226,8 +285,8 @@ class _LessonPageState extends State<LessonPage> {
                       : () {
                           setState(() {
                             userAnswers[currentExerciseIndex] = option;
-                            exerciseCompleted[currentExerciseIndex] = true;
                           });
+                          _completeExercise(option == exercise.correct);
                         },
                 ),
               );
@@ -281,8 +340,8 @@ class _LessonPageState extends State<LessonPage> {
                       : () {
                           setState(() {
                             userAnswers[currentExerciseIndex] = option;
-                            exerciseCompleted[currentExerciseIndex] = true;
                           });
+                          _completeExercise(option == exercise.correct);
                         },
                 ),
               );
@@ -329,9 +388,7 @@ class _LessonPageState extends State<LessonPage> {
                   userAnswers[currentExerciseIndex] = value;
                 },
                 onSubmitted: (_) {
-                  setState(() {
-                    exerciseCompleted[currentExerciseIndex] = true;
-                  });
+                  _completeExercise(isCorrect);
                 },
               ),
             ),
@@ -452,8 +509,8 @@ class _LessonPageState extends State<LessonPage> {
                     : () {
                         setState(() {
                           userAnswers[currentExerciseIndex] = 'true';
-                          exerciseCompleted[currentExerciseIndex] = true;
                         });
+                        _completeExercise(exercise.answer == true);
                       },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: userAnswer == 'true'
@@ -473,8 +530,8 @@ class _LessonPageState extends State<LessonPage> {
                     : () {
                         setState(() {
                           userAnswers[currentExerciseIndex] = 'false';
-                          exerciseCompleted[currentExerciseIndex] = true;
                         });
+                        _completeExercise(exercise.answer == false);
                       },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: userAnswer == 'false'
@@ -626,9 +683,7 @@ class _LessonPageState extends State<LessonPage> {
               const Spacer(),
               ElevatedButton(
                 onPressed: () {
-                  setState(() {
-                    exerciseCompleted[currentExerciseIndex] = true;
-                  });
+                  _completeExercise(isCorrect);
                 },
                 child: const Text('Submit'),
               ),
@@ -636,5 +691,192 @@ class _LessonPageState extends State<LessonPage> {
           ),
       ],
     );
+  }
+
+  Widget _buildDragDropSentence(Exercise exercise) {
+    final isCompleted = exerciseCompleted[currentExerciseIndex] == true;
+    final userOrder = (userAnswers[currentExerciseIndex] ?? '').split(' ').where((s) => s.isNotEmpty).toList();
+    final correctOrder = exercise.correctOrder ?? [];
+    final isCorrect = isCompleted && _listsEqual(userOrder, correctOrder);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          exercise.prompt ?? 'Complete the sentence by dragging words into the blanks',
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 24),
+
+        // Sentence with blanks
+        Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Colors.grey.shade100,
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: _buildSentenceWithBlanks(exercise, userOrder),
+          ),
+        ),
+
+        if (isCompleted) ...[
+          const SizedBox(height: 16),
+          Row(
+            children: [
+              Icon(
+                isCorrect ? Icons.check_circle : Icons.cancel,
+                color: isCorrect ? Colors.green : Colors.red,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                isCorrect ? 'Correct!' : 'Try again!',
+                style: TextStyle(
+                  color: isCorrect ? Colors.green : Colors.red,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+        ],
+
+        const SizedBox(height: 24),
+
+        // Word bank
+        Text(
+          'Drag words here:',
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+        ),
+        const SizedBox(height: 12),
+
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          children: (exercise.dragWords ?? []).map((word) {
+            final isUsed = userOrder.contains(word);
+            return Draggable<String>(
+              data: word,
+              feedback: Material(
+                elevation: 4,
+                child: Chip(
+                  label: Text(word),
+                  backgroundColor: const Color(0xFFC9922A),
+                  labelStyle: const TextStyle(color: Colors.white),
+                ),
+              ),
+              childWhenDragging: Opacity(
+                opacity: 0.5,
+                child: Chip(
+                  label: Text(word),
+                  backgroundColor: Colors.grey.shade300,
+                ),
+              ),
+              child: isUsed
+                  ? const SizedBox.shrink()
+                  : Chip(
+                      label: Text(word),
+                      backgroundColor: const Color(0xFFC9922A),
+                      labelStyle: const TextStyle(color: Colors.white),
+                    ),
+            );
+          }).toList(),
+        ),
+
+        const SizedBox(height: 16),
+
+        // Clear and Submit buttons
+        if (!isCompleted)
+          Row(
+            children: [
+              TextButton(
+                onPressed: () {
+                  setState(() {
+                    userAnswers[currentExerciseIndex] = '';
+                  });
+                },
+                child: const Text('Clear'),
+              ),
+              const Spacer(),
+              ElevatedButton(
+                onPressed: userOrder.length == (exercise.correctOrder?.length ?? 0)
+                    ? () {
+                        _completeExercise(_listsEqual(userOrder, exercise.correctOrder ?? []));
+                      }
+                    : null,
+                child: const Text('Submit'),
+              ),
+            ],
+          ),
+      ],
+    );
+  }
+
+  List<Widget> _buildSentenceWithBlanks(Exercise exercise, List<String> userOrder) {
+    final sentenceParts = exercise.dragSentenceParts ?? [];
+    final widgets = <Widget>[];
+    int wordIndex = 0;
+
+    for (int i = 0; i < sentenceParts.length; i++) {
+      final part = sentenceParts[i];
+      if (part == '___') {
+        // This is a blank
+        final word = wordIndex < userOrder.length ? userOrder[wordIndex] : null;
+        widgets.add(
+          DragTarget<String>(
+            onAcceptWithDetails: (details) {
+              if (!exerciseCompleted[currentExerciseIndex]!) {
+                final receivedWord = details.data;
+                final newOrder = List<String>.from(userOrder);
+                if (wordIndex < newOrder.length) {
+                  newOrder[wordIndex] = receivedWord;
+                } else {
+                  newOrder.add(receivedWord);
+                }
+                setState(() {
+                  userAnswers[currentExerciseIndex] = newOrder.join(' ');
+                });
+              }
+            },
+            builder: (context, candidateData, rejectedData) {
+              return Container(
+                width: 80,
+                height: 32,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(4),
+                  color: word != null ? Colors.blue.shade100 : Colors.white,
+                ),
+                child: Center(
+                  child: Text(
+                    word ?? '',
+                    style: const TextStyle(fontSize: 14),
+                  ),
+                ),
+              );
+            },
+          ),
+        );
+        wordIndex++;
+      } else {
+        // This is regular text
+        widgets.add(
+          Text(
+            part,
+            style: const TextStyle(fontSize: 16),
+          ),
+        );
+      }
+    }
+    return widgets;
+  }
+
+  bool _listsEqual(List<String> a, List<String> b) {
+    if (a.length != b.length) return false;
+    for (int i = 0; i < a.length; i++) {
+      if (a[i] != b[i]) return false;
+    }
+    return true;
   }
 }

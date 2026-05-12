@@ -101,7 +101,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ],
           ),
-          body: Padding(
+          body: SingleChildScrollView(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -172,6 +172,16 @@ class _ProfilePageState extends State<ProfilePage> {
                     child: Column(
                       children: [
                         _buildStatRow('Overall XP', '${appState.xp} XP'),
+                        const Divider(),
+                        _buildStatRow(
+                          'Daily streak',
+                          '${appState.streak} day${appState.streak == 1 ? '' : 's'}',
+                        ),
+                        const Divider(),
+                        _buildStatRow(
+                          'Path lessons (new)',
+                          '${appState.pathLessonsClearedCount()} cleared',
+                        ),
                         const Divider(),
                         _buildStatRow('Current Unit', _getCurrentUnitName(appState)),
                         const Divider(),

@@ -6,6 +6,7 @@ enum ExerciseType {
   matching,
   trueFalse,
   wordBank, // New exercise type
+  dragDropSentence, // New drag and drop exercise type
 }
 
 class Exercise {
@@ -34,6 +35,11 @@ class Exercise {
   final List<String>? wordBank;
   final String? targetSentence;
 
+  // Drag and drop sentence fields
+  final List<String>? dragSentenceParts;
+  final List<String>? dragWords;
+  final List<String>? correctOrder;
+
   const Exercise({
     required this.type,
     this.prompt,
@@ -52,6 +58,9 @@ class Exercise {
     this.answer,
     this.wordBank,
     this.targetSentence,
+    this.dragSentenceParts,
+    this.dragWords,
+    this.correctOrder,
   });
 }
 

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import 'app.dart';
 import 'state/app_state.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final appState = AppState();
+  await appState.initializeDefaults();
   runApp(
-    ChangeNotifierProvider(
-      create: (_) {
-        final appState = AppState();
-        appState.initializeDefaults();
-        return appState;
-      },
+    ChangeNotifierProvider.value(
+      value: appState,
       child: const RoshanApp(),
     ),
   );
